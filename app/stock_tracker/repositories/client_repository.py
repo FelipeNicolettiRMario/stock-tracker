@@ -1,5 +1,5 @@
 from .base import BaseRepo
-from stock_tracker.models.client import Client
+from app.stock_tracker.models.client import Client
 
 from sqlalchemy import select
 from abc import ABC, abstractmethod

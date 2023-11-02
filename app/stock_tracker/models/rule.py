@@ -12,11 +12,11 @@ class Rule(Base):
     __tablename__ = "rule"
      
     id: Mapped[int] = mapped_column(primary_key=True)
-    ticker: Mapped[VARCHAR(7)] = mapped_column(nullable=False)
+    ticker: Mapped[str] = mapped_column(nullable=False)
     period: Mapped[int] = mapped_column(nullable=False)
     operator: Mapped[bool] = mapped_column(nullable=False)
-    target: Mapped[Optional[NUMERIC(5,2)]]
-    comparison_target: Mapped[Optional[VARCHAR(7)]]
+    target: Mapped[Optional[float]]
+    comparison_target: Mapped[Optional[str]]
 
     clients: Mapped[List[Client]] = relationship(secondary=RuleToClient, back_populates="rules")
 

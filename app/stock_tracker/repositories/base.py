@@ -1,4 +1,4 @@
-from stock_tracker.models.base import engine
+from app.stock_tracker.models.base import engine
 from sqlalchemy.orm import sessionmaker
 
 class BaseRepo:

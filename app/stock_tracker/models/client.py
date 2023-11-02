@@ -2,16 +2,15 @@ from .base import Base
 
 from typing import List
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.types import VARCHAR
 
 class Client(Base):
 
     __tablename__ = "client"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[VARCHAR(50)] = mapped_column(nullable=False)
-    email: Mapped[VARCHAR(70)] = mapped_column(unique=True)
-    phone: Mapped[VARCHAR(20)] = mapped_column(unique=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    email: Mapped[str] = mapped_column(unique=True)
+    phone: Mapped[str] = mapped_column(unique=True)
 
     @staticmethod
     def from_dict(data: dict):

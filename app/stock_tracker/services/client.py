@@ -1,5 +1,5 @@
-from stock_tracker.models.client import Client
-from stock_tracker.repositories.client_repository import IClientRepository
+from app.stock_tracker.models.client import Client
+from app.stock_tracker.repositories.client_repository import IClientRepository
 
 from abc import ABC, abstractmethod
 

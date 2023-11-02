@@ -1,5 +1,5 @@
-from stock_tracker.repositories.rule_repository import IRuleRepository
-from stock_tracker.models.rule import Rule
+from app.stock_tracker.repositories.rule_repository import IRuleRepository
+from app.stock_tracker.models.rule import Rule
 
 from typing import List
 from abc import ABC, abstractmethod

@@ -1,5 +1,5 @@
-from stock_tracker.models.rule import Rule
-from stock_tracker.gateway.finance import IFinanceGateway
+from app.stock_tracker.models.rule import Rule
+from app.stock_tracker.gateway.finance import IFinanceGateway
 from .base import BaseRepo
 
 from typing import List

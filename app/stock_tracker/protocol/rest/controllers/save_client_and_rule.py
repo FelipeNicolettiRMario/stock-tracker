@@ -1,6 +1,6 @@
-from stock_tracker.protocol.rest.models.aggregates import AggregateClientAndRule
+from app.stock_tracker.protocol.rest.models.aggregates import AggregateClientAndRule
 
-from stock_tracker.services.factory import ServiceFactory
+from app.stock_tracker.services.factory import ServiceFactory
 
 def save_client_and_rule_controller(aggregated: AggregateClientAndRule):
         
