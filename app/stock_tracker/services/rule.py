@@ -1,5 +1,6 @@
 from app.stock_tracker.repositories.rule_repository import IRuleRepository
 from app.stock_tracker.models.rule import Rule
+from app.stock_tracker.models.client import Client
 
 from typing import List
 from abc import ABC, abstractmethod
@@ -7,7 +8,7 @@ from abc import ABC, abstractmethod
 class IRuleService(ABC):
     
     @abstractmethod
-    def save_rule(self, rule_data: dict):
+    def save_rule(self, rule_data: dict) -> Rule:
         pass
 
     @abstractmethod
@@ -18,14 +19,18 @@ class IRuleService(ABC):
     def is_rule_satisfied(self, rule:Rule) -> bool:
         pass
 
+    @abstractmethod
+    def add_client_to_rule(self, rule: Rule, client: Client):
+        pass
+    
 class RuleService:
 
     def __init__(self, repo: IRuleRepository) -> None:
         
         self.__repo = repo
 
-    def save_rule(self, rule_data: dict):
-        self.__repo.save_rule(rule_data)
+    def save_rule(self, rule_data: dict) -> Rule:
+        return self.__repo.save_rule(rule_data)
 
     def get_all_rules(self) -> List[Rule]:
         self.__repo.get_all_rules()
@@ -56,3 +61,6 @@ class RuleService:
             return self._is_targe_operation_rule_satisfied(rule)
         
         return self._is_comparison_operation_rule_satisfied(rule)
+
+    def add_client_to_rule(self, rule: Rule, client: Client):
+        self.__repo.add_client_to_rule(rule, client)

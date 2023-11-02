@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 class IClientService(ABC):
 
     @abstractmethod
-    def add_client(self, client_data: dict):
+    def add_client(self, client_data: dict) -> Client:
         pass
 
 class ClientService(IClientService):
@@ -15,5 +15,5 @@ class ClientService(IClientService):
         self.__repo = repo
 
     def add_client(self, client_data: dict):
-        self.__repo.save_client(client_data)
+        return self.__repo.save_client(client_data)
 

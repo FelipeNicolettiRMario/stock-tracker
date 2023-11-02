@@ -20,7 +20,7 @@ class Client(Base):
             phone=data.get("phone")
         )
     
-    def update(self, data: dict):
+    def update_value(self, data: dict):
 
        self.email = data.get("email") if self.email != data.get("email") and data.get("email") else self.email
        self.phone = data.get("phone") if self.phone != data.get("phone") and data.get("phone") else self.phone

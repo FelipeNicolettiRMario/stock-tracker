@@ -1,4 +1,4 @@
-from .base import BaseRepo
+from .base import SessionManager
 from app.stock_tracker.models.client import Client
 
 from sqlalchemy import select
@@ -7,17 +7,17 @@ from abc import ABC, abstractmethod
 class IClientRepository(ABC):
 
     @abstractmethod
-    def save_client(self, client_data: dict):
+    def save_client(self, client_data: dict) -> Client:
         """
             `client_data` = Client data that will be used for create a Client
         """
         pass
 
-class ClientSQLRepository(BaseRepo,IClientRepository):
+class ClientSQLRepository(IClientRepository):
 
     def __init__(self) -> None:
-        super(BaseRepo).__init__()
-        self.__session = self._get_session()
+        super().__init__()
+        self.__session = SessionManager()._get_session()
 
     def _get_client_by_parameter(self, parameter_name: str, parameter: str) -> Client | None:
         """
@@ -36,21 +36,21 @@ class ClientSQLRepository(BaseRepo,IClientRepository):
     
     def _update_client(self,client: Client, client_data: dict):
 
-        client.update(client_data)
+        client.update_value(client_data)
         self.__session.commit()
         self.__session.flush()
 
 
-    def save_client(self, client_data: dict):
+    def save_client(self, client_data: dict) -> Client:
         
         email = client_data.get("email")
         phone = client_data.get("phone")
 
         client = None
         if email:
-            client = self._get_client_by_parameter("email", email)
+            client = self._get_client_by_parameter("email", email)[0]
         elif phone:
-            client = self._get_client_by_parameter("phone", phone)
+            client = self._get_client_by_parameter("phone", phone)[0]
         else:
             raise ValueError("Client must have email or phone")
 
@@ -61,3 +61,5 @@ class ClientSQLRepository(BaseRepo,IClientRepository):
             client = Client.from_dict(client_data)
             self.__session.add(client)
             self.__session.commit()
+
+        return client

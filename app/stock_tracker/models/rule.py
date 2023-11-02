@@ -18,14 +18,14 @@ class Rule(Base):
     target: Mapped[Optional[float]]
     comparison_target: Mapped[Optional[str]]
 
-    clients: Mapped[List[Client]] = relationship(secondary=RuleToClient, back_populates="rules")
+    clients: Mapped[List[Client]] = relationship(secondary=RuleToClient)
 
     UniqueConstraint("period", "operator", "target","comparison_target", "ticker")
 
     @staticmethod
     def from_dict(data: dict):
         return Rule(
-            period=data.get("name"),
+            period=data.get("period"),
             operator=data.get("operator"),
             target=data.get("target"),
             comparison_target=data.get("comparison_target"),
