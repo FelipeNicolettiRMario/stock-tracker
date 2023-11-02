@@ -1,4 +1,5 @@
 from stock_tracker.models.rule import Rule
+from stock_tracker.gateway.finance import IFinanceGateway
 from .base import BaseRepo
 
 from typing import List
@@ -15,11 +16,16 @@ class IRuleRepository(ABC):
     def get_all_rules(self) -> List[Rule]:
         pass
 
-class RuleSQLRepository(BaseRepo, IRuleRepository):
+    @abstractmethod
+    def get_rule_ticker_actual_value(self, rule: Rule) -> float:
+        pass
 
-    def __init__(self) -> None:
+class RuleRepository(BaseRepo, IRuleRepository):
+
+    def __init__(self, finance_gateway: IFinanceGateway) -> None:
         super(BaseRepo).__init__()
         self.__sesion = self._get_session()
+        self.__finance_gateway = finance_gateway
 
     def save_rule(self, rule_data: dict):
         
@@ -33,3 +39,6 @@ class RuleSQLRepository(BaseRepo, IRuleRepository):
 
         return self.__sesion.execute(query).all()
     
+    def get_rule_ticker_actual_value(self, rule: Rule) -> float:
+
+        return self.__finance_gateway.get_most_recent_price(rule.ticker)
