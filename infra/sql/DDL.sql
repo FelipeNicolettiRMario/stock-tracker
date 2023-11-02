@@ -11,6 +11,7 @@ CREATE TABLE client (
 
 CREATE TABLE rule (
     id SERIAL PRIMARY KEY,
+    ticker VARCHAR(7) NOT NULL,
     period INT NOT NULL,
     operator BOOLEAN NOT NULL,
     target NUMERIC(5,2),
