@@ -22,6 +22,10 @@ class IRuleService(ABC):
     @abstractmethod
     def add_client_to_rule(self, rule: Rule, client: Client):
         pass
+
+    @abstractmethod
+    def get_single_rule(self, rule_id: int) -> Rule:
+        pass
     
 class RuleService:
 
@@ -33,7 +37,7 @@ class RuleService:
         return self.__repo.save_rule(rule_data)
 
     def get_all_rules(self) -> List[Rule]:
-        self.__repo.get_all_rules()
+        return self.__repo.get_all_rules()
     
     def _is_targe_operation_rule_satisfied(self, rule: Rule) -> bool:
 
@@ -64,3 +68,6 @@ class RuleService:
 
     def add_client_to_rule(self, rule: Rule, client: Client):
         self.__repo.add_client_to_rule(rule, client)
+
+    def get_single_rule(self, rule_id: int) -> Rule:
+        return self.__repo.get_single_rule(rule_id)

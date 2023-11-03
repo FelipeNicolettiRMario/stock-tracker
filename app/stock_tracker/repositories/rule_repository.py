@@ -25,6 +25,10 @@ class IRuleRepository(ABC):
     def add_client_to_rule(self, rule: Rule, client: Client):
         pass
 
+    @abstractmethod
+    def get_single_rule(self, rule_id: int) -> Rule:
+        pass
+
 class RuleRepository(IRuleRepository):
 
     def __init__(self, finance_gateway: IFinanceGateway) -> None:
@@ -53,3 +57,6 @@ class RuleRepository(IRuleRepository):
         rule.clients.append(client)
         self.__session.commit()
         self.__session.flush()
+
+    def get_single_rule(self, rule_id: int) -> Rule:
+        return Rule.get(rule_id)
