@@ -10,9 +10,7 @@ class ICommunication(ABC):
 
     def send_email(self, content: str,subject:str, address:str):
         raise NotImplementedError()
-    
-    def send_sms(self, content: str,subject:str, phone: str):
-        raise NotImplementedError()
+
     
 class Communication(ICommunication):
 
