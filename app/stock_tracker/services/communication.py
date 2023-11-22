@@ -16,7 +16,7 @@ class ICommunication(ABC):
     
 class Communication(ICommunication):
 
-    EMAIL_PORT = 465
+    EMAIL_PORT = 587
     EMAIL_HOST = "smtp-mail.outlook.com"
 
     def __init__(self) -> None:
@@ -26,14 +26,14 @@ class Communication(ICommunication):
 
     def send_email(self, content: str,subject:str, address:str):
 
-        email_message = f"""
-            Subject: {subject}
+        email_message = f"""Subject: {subject}
 
             {content}
-        """
+        """.encode("utf-8")
 
-        ssl_context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(self.EMAIL_HOST, self.EMAIL_PORT, context=ssl_context) as server:
+        with smtplib.SMTP(self.EMAIL_HOST, self.EMAIL_PORT) as server:
+            server.ehlo()
+            server.starttls()
 
             server.login(
                 user=self.__email_addr,
@@ -41,3 +41,4 @@ class Communication(ICommunication):
             )
 
             server.sendmail(self.__email_addr, address, email_message)
+            server.quit()
