@@ -49,9 +49,9 @@ class RuleRepository(IRuleRepository):
 
         return self.__session.execute(query).all()
     
-    def get_rule_ticker_actual_value(self, rule: Rule) -> float:
+    def get_rule_ticker_actual_value(self, ticker: str) -> float:
 
-        return self.__finance_gateway.get_most_recent_price(rule.ticker)
+        return self.__finance_gateway.get_most_recent_price(ticker)
     
     def add_client_to_rule(self, rule: Rule, client: Client):
         rule.clients.append(client)
@@ -59,4 +59,4 @@ class RuleRepository(IRuleRepository):
         self.__session.flush()
 
     def get_single_rule(self, rule_id: int) -> Rule:
-        return Rule.get(rule_id)
+        return self.__session.query(Rule).get(rule_id)

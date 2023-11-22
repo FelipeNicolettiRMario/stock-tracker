@@ -1,5 +1,6 @@
 from .client import IClientService
 from .rule import IRuleService
+from .communication import ICommunication
 
 class ServiceFactory:
 
@@ -23,3 +24,11 @@ class ServiceFactory:
                 YahooFinanceGateway()
             )
         )
+    
+    @staticmethod
+    def get_communication_service() -> ICommunication:
+        from app.stock_tracker.services.communication import Communication
+
+        return Communication()
+
+
